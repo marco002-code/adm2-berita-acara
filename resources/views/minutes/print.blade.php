@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berita Acara - {{ $minute->room->name }} - {{ $minute->examSession->name }}</title>
     @vite(['resources/css/app.css'])
+    <style>
         @media print {
             .no-print { display: none !important; }
             body { 
