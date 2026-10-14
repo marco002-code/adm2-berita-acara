@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProctorSeeder::class);
         $this->call(ParticipantSeeder::class);
         $this->call(AttendanceSeeder::class);
+        $this->call(MinuteOfEventSeeder::class);
 
         // Akun Proktor Utama
         User::query()->firstOrCreate(
