@@ -29,7 +29,7 @@ class MinuteOfEventSeeder extends Seeder
             $roomLab1?->id => ['name' => 'Ida Alma Khairunisa', 'nip' => '1473659'],
             $roomLab2?->id => ['name' => 'Bektiyono', 'nip' => '1109352'],
             $roomLab3?->id => ['name' => 'Hugeng Seto Pranowo', 'nip' => '1589828'],
-            $roomMulti?->id => ['name' => 'Qomarudin', 'nip' => '1042001'],
+            $roomMulti?->id => ['name' => 'Qomarudin, S.T.', 'nip' => '1042001'],
         ];
 
         // Sesi Ujian Matematika

@@ -189,7 +189,7 @@
                 <div class="my-2 p-1.5 bg-white border border-slate-300 rounded-lg inline-block shadow-sm print:shadow-none print:border-black">
                     <div id="qr-supervisor" class="qr-code-box w-[88px] h-[88px] flex items-center justify-center"></div>
                 </div>
-                <p class="font-bold underline uppercase text-xs sm:text-sm tracking-wide">{{ $minute->supervisor_name }}</p>
+                <p class="font-bold underline text-xs sm:text-sm tracking-wide">{{ $minute->supervisor_name }}</p>
                 <p class="text-[11px] sm:text-xs text-slate-700 font-medium mt-0.5">{{ $formatNbm($minute->supervisor_nip) }}</p>
             </div>
 
@@ -199,7 +199,7 @@
                 <div class="my-2 p-1.5 bg-white border border-slate-300 rounded-lg inline-block shadow-sm print:shadow-none print:border-black">
                     <div id="qr-proctor" class="qr-code-box w-[88px] h-[88px] flex items-center justify-center"></div>
                 </div>
-                <p class="font-bold underline uppercase text-xs sm:text-sm tracking-wide">{{ $minute->proctor_name }}</p>
+                <p class="font-bold underline text-xs sm:text-sm tracking-wide">{{ $minute->proctor_name }}</p>
                 <p class="text-[11px] sm:text-xs text-slate-700 font-medium mt-0.5">{{ $formatNbm($minute->proctor_nip) }}</p>
             </div>
 
@@ -209,7 +209,7 @@
                 <div class="my-2 p-1.5 bg-white border border-slate-300 rounded-lg inline-block shadow-sm print:shadow-none print:border-black">
                     <div id="qr-headmaster" class="qr-code-box w-[88px] h-[88px] flex items-center justify-center"></div>
                 </div>
-                <p class="font-bold underline uppercase text-xs sm:text-sm tracking-wide">{{ $headmasterName }}</p>
+                <p class="font-bold underline text-xs sm:text-sm tracking-wide">{{ $headmasterName }}</p>
                 <p class="text-[11px] sm:text-xs text-slate-700 font-medium mt-0.5">{{ $formatNbm($headmasterNbm) }}</p>
             </div>
         </div>

@@ -15,7 +15,7 @@ class ProctorSeeder extends Seeder
     {
         // 1. Data 4 Proktor
         $proctors = [
-            ['name' => 'Qomarudin', 'nbm' => '1042001'],
+            ['name' => 'Qomarudin, S.T.', 'nbm' => '1042001'],
             ['name' => 'Ida Alma Khairunisa', 'nbm' => '1473659'],
             ['name' => 'Hugeng Seto Pranowo', 'nbm' => '1589828'],
             ['name' => 'Bektiyono', 'nbm' => '1109352'],
