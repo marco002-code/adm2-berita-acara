@@ -6,6 +6,7 @@ use App\Models\Attendance;
 use App\Models\ExamSession;
 use App\Models\Participant;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Collection;
 
 class AttendanceSeeder extends Seeder
 {
@@ -14,8 +15,8 @@ class AttendanceSeeder extends Seeder
      */
     public function run(): void
     {
-        // 11 siswa yang tidak hadir pada ujian Matematika
-        $absentList = [
+        // 1. Ujian Matematika (12 Oktober 2026 - 11 Siswa Tidak Hadir)
+        $mathAbsentList = [
             'P0100320017' => ['name' => 'IQBAL RADITYA ARYASATYA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
             'P0100320247' => ['name' => 'WAHYU SEKAR KIRANA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
             'P0100320185' => ['name' => 'WILDHAN NUR ARIFIN', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
@@ -29,16 +30,47 @@ class AttendanceSeeder extends Seeder
             'P0100320144' => ['name' => 'MUHAMMAD RAYYAN KHAIRUL AKRAM', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
         ];
 
-        // Ambil sesi ujian Matematika (12 Oktober 2026 / 01 Matematika TKA)
-        $mathSessionIds = ExamSession::query()
-            ->where('subject', 'like', '%Matematika%')
-            ->pluck('id');
+        // 2. Ujian Bahasa Indonesia (13 Oktober 2026 - 14 Siswa Tidak Hadir)
+        $indoAbsentList = [
+            'P0100320229' => ['name' => 'HANA DANENDRA KASYARA HABIBULLAH', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320185' => ['name' => 'WILDHAN NUR ARIFIN', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320003' => ['name' => 'AIESHA HASNA HABIB', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320007' => ['name' => 'ARKAN ARROYYAN', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320001' => ['name' => 'ABIGAIL XAVIOLA NUGRAHA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320086' => ['name' => 'REYHAN ALFATIR ARSYA PRATISTA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320026' => ['name' => 'NAURA ABEL NIJANANDA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320184' => ['name' => 'WAWA RAHMADANI', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320010' => ['name' => 'CAHYA AULIA WILDA PUTRI', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320240' => ['name' => 'MUHAMMAD TIAN PUTRA ARYARETA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320144' => ['name' => 'MUHAMMAD RAYYAN KHAIRUL AKRAM', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320152' => ['name' => 'SITI ALISYA ALEXANDRA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320040' => ['name' => 'CHAILA AFRILLIA NAFISA', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+            'P0100320228' => ['name' => 'FADEL ABBAS AL FAHREZI', 'reason' => 'Tanpa Keterangan', 'notes' => 'Belum Mengerjakan'],
+        ];
 
+        // Sesi Matematika & Bahasa Indonesia
+        $mathSessionIds = ExamSession::query()->where('subject', 'like', '%Matematika%')->pluck('id');
+        $indoSessionIds = ExamSession::query()->where('subject', 'like', '%Indonesia%')->pluck('id');
+
+        $mathCount = $this->seedAbsences($mathAbsentList, $mathSessionIds);
+        $indoCount = $this->seedAbsences($indoAbsentList, $indoSessionIds);
+
+        $this->command?->info("Berhasil mencatat {$mathCount} siswa tidak hadir Matematika dan {$indoCount} siswa tidak hadir Bhs. Indonesia.");
+    }
+
+    /**
+     * Helper to seed absences for given participant numbers and session IDs.
+     *
+     * @param  array<string, array{name: string, reason: string, notes: string}>  $absentList
+     * @param  Collection<int, int>  $sessionIds
+     */
+    private function seedAbsences(array $absentList, $sessionIds): int
+    {
         $count = 0;
         foreach ($absentList as $nis => $info) {
             $participant = Participant::query()
                 ->where('participant_number', $nis)
-                ->whereIn('exam_session_id', $mathSessionIds)
+                ->whereIn('exam_session_id', $sessionIds)
                 ->first();
 
             if ($participant) {
@@ -58,6 +90,6 @@ class AttendanceSeeder extends Seeder
             }
         }
 
-        $this->command?->info("Berhasil mencatat {$count} siswa tidak hadir pada ujian Matematika.");
+        return $count;
     }
 }
