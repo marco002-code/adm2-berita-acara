@@ -24,12 +24,12 @@ class MinuteOfEventSeeder extends Seeder
         $roomLab3 = Room::where('name', 'LAB 3')->orWhere('code', 'LAB-3')->first();
         $roomMulti = Room::where('name', 'MULTI')->orWhere('code', 'MULTI')->first();
 
-        // Default Proktor per Ruangan
+        // Default Proktor per Ruangan (Lab 1 = Ida Alma, Lab 2 = Bektiyono, Lab 3 = Hugeng Seto, Multimedia = Qomarudin)
         $proctors = [
-            $roomLab1?->id => ['name' => 'Qomarudin', 'nip' => '1042001'],
-            $roomLab2?->id => ['name' => 'Ida Alma Khairunisa', 'nip' => '1473659'],
+            $roomLab1?->id => ['name' => 'Ida Alma Khairunisa', 'nip' => '1473659'],
+            $roomLab2?->id => ['name' => 'Bektiyono', 'nip' => '1109352'],
             $roomLab3?->id => ['name' => 'Hugeng Seto Pranowo', 'nip' => '1589828'],
-            $roomMulti?->id => ['name' => 'Bektiyono', 'nip' => '1109352'],
+            $roomMulti?->id => ['name' => 'Qomarudin', 'nip' => '1042001'],
         ];
 
         // Sesi Ujian Matematika
@@ -173,6 +173,16 @@ class MinuteOfEventSeeder extends Seeder
             }
         }
 
-        $this->command?->info("Berhasil membuat {$totalMinutes} data Berita Acara dan Pengawas ujian sesuai jadwal resmi.");
+        // Pastikan seluruh data Berita Acara mengikuti plotting proktor per ruangan
+        foreach ($proctors as $roomId => $proctor) {
+            if ($roomId) {
+                MinuteOfEvent::where('room_id', $roomId)->update([
+                    'proctor_name' => $proctor['name'],
+                    'proctor_nip' => $proctor['nip'],
+                ]);
+            }
+        }
+
+        $this->command?->info("Berhasil membuat {$totalMinutes} data Berita Acara dengan plotting proktor baru.");
     }
 }
